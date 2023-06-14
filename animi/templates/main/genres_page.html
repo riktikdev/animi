@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- PRIMARY META TAGS -->
+    <title>AniMi</title>
+    <meta name="title" content="AniMi">
+    <meta name="description" content="AniMi — платформа для просмотра аниме. Захватывающие аниме разных жанров с уникальными персонажами и потрясающей рисовкой.">
+
+    <!-- FAVICON -->
+    <!-- <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml"> -->
+
+    <!-- GOOGLE FONT LINK -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- CUSTOM CSS LINK -->
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+
+    <!-- CUSTOM JS LINK -->
+    <!-- <script src="./assets/js/global.js" defer></script> -->
+    <script src="{% static 'main/js/index.js' %}" defer></script>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <a href="{% url 'mainpage' %}" class="logo">
+            <img src="{% static 'main/img/logo.svg' %}" width="140" height="32" alt="AniMi Главная">
+        </a>
+
+        <form action="/search" class="search-form" method="GET">
+            <div class="search-box" search-box>
+                <div class="search-wrapper" search-wrapper>
+                    <input type="text" name="search" aria-label="search anime" placeholder="Поиск ..." class="search-field" search-field>
+    
+                    <img src="{% static 'main/img/search.png' %}" width="24" height="24" alt="search" class="leading-icon">
+                </div>
+    
+                <button class="search-btn" search-toggler>
+                    <img src="{% static 'main/img/close.png' %}" width="24" height="24" alt="close search box">
+                </button>
+            </div>
+        </form>
+
+        <button class="search-btn" search-toggler menu-close>
+          <img src="{% static 'main/img/search.png' %}" width="24" height="24" alt="open search box">
+        </button>
+
+        <button class="menu-btn" menu-btn menu-toggler>
+          <img src="{% static 'main/img/menu.png' %}" width="24" height="24" alt="open menu" class="menu">
+          <img src="{% static 'main/img/menu-close.png' %}" width="24" height="24" alt="close menu" class="close">
+        </button>
+    </header>
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar" sidebar>
+        <div class="sidebar-inner">
+            <div class="sidebar-list">
+                <p class="title">Жанр</p>
+                <a href="{% url 'genrespage' pk='Безумие' %}" menu-close class="sidebar-link">
+                    Безумие
+                </a>
+                <a href="{% url 'genrespage' pk='Вампиры' %}" menu-close class="sidebar-link">
+                    Вампиры
+                </a>
+                <a href="{% url 'genrespage' pk='Военное' %}" menu-close class="sidebar-link">
+                    Военное
+                </a>
+                <a href="{% url 'genrespage' pk='Гарем' %}" menu-close class="sidebar-link">
+                    Гарем
+                </a>
+                <a href="{% url 'genrespage' pk='Демоны' %}" menu-close class="sidebar-link">
+                    Демоны
+                </a>
+                <a href="{% url 'genrespage' pk='Детектив' %}" menu-close class="sidebar-link">
+                    Детектив
+                </a>
+                <a href="{% url 'genrespage' pk='Детское' %}" menu-close class="sidebar-link">
+                    Детское
+                </a>
+                <a href="{% url 'genrespage' pk='Дзёсей' %}" menu-close class="sidebar-link">
+                    Дзёсей
+                </a>
+                <a href="{% url 'genrespage' pk='Драма' %}" menu-close class="sidebar-link">
+                    Драма
+                </a>
+                <a href="{% url 'genrespage' pk='Игры' %}" menu-close class="sidebar-link">
+                    Игры
+                </a>
+                <a href="{% url 'genrespage' pk='Исторический' %}" menu-close class="sidebar-link">
+                    Исторический
+                </a>
+                <a href="{% url 'genrespage' pk='Комедия' %}" menu-close class="sidebar-link">
+                    Комедия
+                </a>
+                <a href="{% url 'genrespage' pk='Космос' %}" menu-close class="sidebar-link">
+                    Космос
+                </a>
+                <a href="{% url 'genrespage' pk='Машины' %}" menu-close class="sidebar-link">
+                    Машины
+                </a>
+                <a href="{% url 'genrespage' pk='Меха' %}" menu-close class="sidebar-link">
+                    Меха
+                </a>
+                <a href="{% url 'genrespage' pk='Музыка' %}" menu-close class="sidebar-link">
+                    Музыка
+                </a>
+                <a href="{% url 'genrespage' pk='Повседневность' %}" menu-close class="sidebar-link">
+                    Повседневность
+                </a>
+                <a href="{% url 'genrespage' pk='Полиция' %}" menu-close class="sidebar-link">
+                    Полиция
+                </a>
+                <a href="{% url 'genrespage' pk='Приключения' %}" menu-close class="sidebar-link">
+                    Приключения
+                </a>
+                <a href="{% url 'genrespage' pk='Психологическое' %}" menu-close class="sidebar-link">
+                    Психологическое
+                </a>
+                <a href="{% url 'genrespage' pk='Романтика' %}" menu-close class="sidebar-link">
+                    Романтика
+                </a>
+                <a href="{% url 'genrespage' pk='Самураи' %}" menu-close class="sidebar-link">
+                    Самураи
+                </a>
+                <a href="{% url 'genrespage' pk='Сверхъестественное' %}" menu-close class="sidebar-link">
+                    Сверхъестественное
+                </a>
+                <a href="{% url 'genrespage' pk='Сёнен' %}" menu-close class="sidebar-link">
+                    Сёнен
+                </a>
+                <a href="{% url 'genrespage' pk='Сёнен-Ай' %}" menu-close class="sidebar-link">
+                    Сёнен-Ай
+                </a>
+                <a href="{% url 'genrespage' pk='Спорт' %}" menu-close class="sidebar-link">
+                    Спорт
+                </a>
+                <a href="{% url 'genrespage' pk='Сэйнэн' %}" menu-close class="sidebar-link">
+                    Сэйнэн
+                </a>
+                <a href="{% url 'genrespage' pk='Триллер' %}" menu-close class="sidebar-link">
+                    Триллер
+                </a>
+                <a href="{% url 'genrespage' pk='Ужасы' %}" menu-close class="sidebar-link">
+                    Ужасы
+                </a>
+                <a href="{% url 'genrespage' pk='Фантастика' %}" menu-close class="sidebar-link">
+                    Фантастика
+                </a>
+                <a href="{% url 'genrespage' pk='Фэнтези' %}" menu-close class="sidebar-link">
+                    Фэнтези
+                </a>
+                <a href="{% url 'genrespage' pk='Школа' %}" menu-close class="sidebar-link">
+                    Школа
+                </a>
+                <a href="{% url 'genrespage' pk='Экшен' %}" menu-close class="sidebar-link">
+                    Экшен
+                </a>
+                <a href="{% url 'genrespage' pk='Ужасы' %}" menu-close class="sidebar-link">
+                    Ужасы
+                </a>
+            </div>
+
+            <div class="sidebar-footer">
+                <p class="copyright">
+                    Copyright 2023 <a href="https://animi.site">AniMi</a>
+                </p>
+            </div>
+        </div>
+    </nav>
+    <div class="overlay" overlay menu-toggler></div>
+
+    <article class="container">
+        <section class="movie-list genre-list">
+            <div class="title-wrapper">
+                <h1 class="heading">Аниме жанра «{% if genre_name %}{{ genre_name }}{% endif %}»</h1>
+            </div>
+
+            <div class="grid-list">
+                {% for genre_item in anime_data %}
+                    <div class="anime-card">
+                        <figure class="poster-box card-banner">
+                            <img src="{{ genre_item.poster_url }}" class="img-cover">
+                        </figure>
+                        <h4 class="title">{{ genre_item.title }}</h4>
+                        <div class="meta-list">
+                            <div class="meta-item">
+                                <img src="{% static 'main/img/star.png' %}" width="24" height="24" loading="lazy" alt="rating">
+                                <span class="span">{{ genre_item.rating }}</span>
+                            </div>
+                            <div class="card-badge">{{ genre_item.year }}</div>
+                        </div>
+                        <a href="{% url 'playerpage' pk=genre_item.title %}" class="card-btn" title="{{ genre_item.title }}"></a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </article>
+</body>
+</html>
