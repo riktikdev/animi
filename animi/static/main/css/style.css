@@ -22,7 +22,7 @@
   --bottom-overlay: 180deg, #1a182000, #141414;
 
   /* TYPOGRAPHY */
-  --ff-pp-sans: 'Rubik', sans-serif;
+  --ff-rk-sans: 'Rubik', sans-serif;
 
   --fs-heading: 4rem;
   --fs-title-lg: 2.6rem;
@@ -95,7 +95,7 @@ button {
 }
 
 html {
-  font-family: var(--ff-pp-sans);
+  font-family: var(--ff-rk-sans);
   font-size: 10px;
   scroll-behavior: smooth;
 }
@@ -255,7 +255,7 @@ body {
 .slider-list .slider-inner {
   position: relative;
   display: flex;
-  gap: 16px; 
+  gap: 16px;
 }
 
 .slider-list .slider-inner::before,
@@ -328,7 +328,7 @@ body {
   border-radius: var(--radius-8);
 }
 
-.search-btn img { 
+.search-btn img {
   opacity: 0.5;
   transition: var(--transition-short);
 }
@@ -602,7 +602,7 @@ body {
 .anime-card .card-banner { width: 200px; }
 
 .anime-card .title {
-  width: 100%;
+  width: 200px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -850,12 +850,13 @@ body {
     max-width: 500px;
   }
 
+  .slider-control { left: calc(100% - 400px); }
+
+  /* PLAYER PAGE */
   .player {
     width: 100%;
     height: 400px;
-  } 
-
-  .slider-control { left: calc(100% - 400px); }
+  }
 
   /* DETAIL PAGE */
   .detail-content { max-width: 750px; }
@@ -865,7 +866,7 @@ body {
   /* CUSTOM PROPERTY */
   :root {
     /* GRADIENT */
-    --baner-overlay: 90deg, hsl(220, 17%, 7%) 0%, hsla(220, 17%, 7%, 0) 100%;
+    --banner-overlay: 90deg, hsl(220, 17%, 7%) 0%, hsla(220, 17%, 7%, 0) 100%;
 
     /* FONT SIZE */
     --fs-heading: 5.4rem;
@@ -873,7 +874,7 @@ body {
 
   /* HOME PAGE */
   .container { padding-inline: 24px; }
-  
+
   .slider-list { margin-inline: -24px; }
 
   .search-btn { display: none; }
@@ -883,8 +884,6 @@ body {
     display: block;
     width: 360px;
   }
-
-  .banner { height: 500px; }
 
   .banner-content {
     bottom: 50%;
@@ -915,9 +914,14 @@ body {
   .player {
     width: 100%;
     height: 600px;
-  }  
+  }
 
   .anime-detail .slider-inner::before { display: none; }
+}
+
+@media (min-width: 1024px) {
+  /* HOME PAGE */
+  .banner { height: 500px; }
 }
 
 @media (min-width: 1200px) {
