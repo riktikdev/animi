@@ -392,6 +392,23 @@ body {
 
 .search-wrapper:focus-within .leading-icon { opacity: 0; }
 
+.user-btn {
+  display: flex;
+  font-size: 25px;
+  --ionicon-stroke-width: 35px;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+}
+
+.user-btn img {
+  color: white;
+  border-radius: 50px;
+  width: 100%;
+  height: 100%;
+}
+
 /*-----------------------------------*\
   #SIDEBAR
 \*-----------------------------------*/
@@ -698,152 +715,232 @@ body {
   #PROFILE PAGE
 \*-----------------------------------*/
 
-.profile {
+.profile-container {
   width: 100%;
-  height: 615px;
-  max-width: 1195px;
+  height: 400px;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  background-color: var(--background);
+  border-radius: 0 0 10px 10px;
+  flex-direction: column;
+}
+
+.profile-container .user-banner {
+  width: 100%;
+  height: 100%;
+  max-height: 180px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px 10px 0 0;
+}
+
+.profile-container .user-banner .user-banner-image-input {
+  width: 100%;
+  height: 100%;
+  opacity: 0%;
+}
+
+.profile-container .user-info .top-content {
+  display: flex;
+  align-items: center;
+  padding-top: 15px;
+  padding-left: 15px;
+}
+
+.profile-container .user-info .top-content .username-last-visit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 15px;
+}
+
+.profile-container .user-info .top-content .username-last-visit .username {
+  font-weight: var(--weight-semibold);
+  line-height: 0.8;
+}
+
+.profile-container .user-info .top-content .username-last-visit .last-visit {
+  font-weight: var(--weight-regular);
+  font-size: var(--fs-button);
+  color: var(--on-surface-variant);
+}
+
+.profile-container .user-info .top-content .user-avatar .user-status {
+  border-radius: 50%;
+  width: 21px;
+  height: 21px;
+  border: 4px solid var(--background);
+  animation: live 4s 1s ease-out infinite;
+}
+
+.profile-container .user-info .bottom-content {
+  display: flex;
+  flex-direction: column;
+  padding-left: 15px;
+  background-color: var(--surface);
+  border-radius: 10px;
+  margin: 15px;
+  justify-content: center;
+  padding: 15px 10px;
+}
+
+.profile-container .user-info .bottom-content h5 {
+  text-transform: uppercase;
+  color: var(--on-surface);
+}
+
+.profile-container .user-info .bottom-content span {
+  font-weight: var(--weight-regular);
+  font-size: var(--fs-label);
+}
+
+.profile-container .user-info .top-content .add-to-friends-button {
+  background-color: #248046;
+  padding: 5px 15px;
+  border-radius: 5px;
+  font-size: var(--fs-button);
+  margin-left: auto;
+  margin-right: 15px;
+}
+
+@keyframes live {
+  0%, 80%, 100% {
+    transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+  } 40% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+}
+
+.personal-image {
+  text-align: center;
+}
+.personal-image input[type="file"] {
+  display: none;
+}
+.personal-figure {
+  position: relative;
+}
+.personal-avatar {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: 100%;
+  transition: var(--transition-short)
+}
+.personal-figcaption {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0px;
+  width: inherit;
+  height: inherit;
+  border-radius: 100%;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0);
+  transition: var(--transition-short)
+}
+.personal-figcaption:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, .5);
+}
+
+/*-----------------------------------*\
+  #LOGIN AND REGISTRATION PAGES
+\*-----------------------------------*/
+
+.login-container {
+  width: 100%;
+  height: 400px;
+  max-width: 450px;
   margin: 0 auto;
   position: relative;
   display: flex;
   justify-content: center;
+  background-color: var(--background);
+  border-radius: 15px;
+  margin-top: 40px;
 }
 
-.profile-sidebar .menu-item .sidebar-link {
-  display: flex;
-  margin-right: 25px;
-  align-items: center;
+.login-container .form{
+  margin-top: 30px;
+  width: 90%;
 }
-
-.menu-item .sidebar-link {
-  margin-bottom: 5px;
-  font-size: 17px;
-  font-weight: var(--weight-regular);
-}
-
-.menu-item img {
-  padding-right: 8px;
-}
-
-.profile-sidebar .title {
-  color: #838383;
-  margin-bottom: 8px;
-  font-weight: var(--weight-semibold);
-}
-
-.profile .profile-content {
-  display: flex;
-  flex-direction: column;
-  overflow: none;
-}
-
-.profile-content .account-banner {
+.login-container .form .field{
+  background: var(--banner-background);
+  position: relative;
+  height: 50px;
   width: 100%;
+  margin-top: 20px;
+  border-radius: 6px;
+}
+.login-container .field input,
+.login-container .field button{
   height: 100%;
-  max-height: 135px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-}
-
-.profile-content .account-banner img {
   width: 100%;
-  height: auto;
+  border: none;
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 6px;
 }
-
-.account-upper {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  margin-bottom: 7px;
+.login-container .field input{
+  outline: none;
+  padding: 0 15px;
 }
-
-.account-upper .user-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50px;
-  margin-top: -35px;
-  border: 5px solid var(--background);
-  margin-left: 25px;
-  margin-right: 15px;
-  flex-shrink: 0;
+.login-container .field input:focus{
+  border-bottom-width: 2px;
 }
-
-.account-upper .edit-profile {
+.login-container .eye-icon{
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #8b8b8b;
+  cursor: pointer;
+  padding: 5px;
+}
+.login-container .field button{
+  color: #fff;
   background-color: var(--primary);
-  height: 32px;
-  width: 195px;
-  font-weight: var(--weight-semibold);
-  font-size: 14px;
-  display: flex;
-  justify-content: center; /* Выравнивание по горизонтали */
-  align-items: center; /* Выравнивание по вертикали */
-  text-align: center; /* Если текст внутри элемента не является единственным контентом */
-  border-radius: 5px;
-  margin-right: 0;
-}
-
-.account-lower {
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-  justify-content: center;
-}
-
-.account-item {
-  display: grid;
-  grid-template-columns: auto min-content;
-  align-items: center;
-  margin: 6px;
-}
-
-.account-item .title {
-  font-size: 12px;
-  text-transform: uppercase;
-  color: #747474;
-  grid-column: 1;
-  margin-right: 10px;
-}
-
-.account-item .field {
-  grid-column: 1;
-  margin-bottom: 5px;
-  font-weight: var(--weight-medium);
-}
-
-.account-item .edit {
-  grid-column: 2;
-  justify-self: end;
-  font-size: 14px;
-  background-color: #202020;
-  height: 35px;
-  width: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 3px;
-}
-
-.account-item .edit img {
-  margin-right: 3px;
-}
-
-.line {
-  left: 5px;
-  right: 5px;
-  height: 2px;
-  width: 210px;
-  border-radius: 25px;
-  background: #161616;
   transition: all 0.3s ease;
-  margin-top: 8px;
-  margin-bottom: 8px;
+  cursor: pointer;
+  text-align: center;
+}
+.login-container .field button:hover{
+  background-color: var(--primary-variant);
+}
+.login-container .form-link{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.login-container .form-link span,
+.login-container .form-link a{
+  display: flex;
+  flex-direction: row;
+  font-size: 14px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.login-container .form a{
+  color: #0171d3;
+  text-decoration: none;
+}
+.login-container .form-content a:hover{
+  text-decoration: underline;
 }
 
 /*-----------------------------------*\
   #MEDIA QUERIES
 \*-----------------------------------*/
 
-@media (min-width: 575px) {
+@media (min-width: 320px) {
   /* HOME PAGE */
   .banner-content {
     right: auto;
@@ -860,6 +957,22 @@ body {
 
   /* DETAIL PAGE */
   .detail-content { max-width: 750px; }
+
+  /* PROFILE PAGE */
+  /* PROFILE PAGE */
+  .profile-container .user-info .top-content .add-to-friends-button span {
+    display: none;
+  }
+
+  .profile-container .user-info .top-content .user-avatar {
+    width: 60px;
+    height: 60px;
+  }
+
+  .personal-figure {
+    width: 60px;
+    height: 60px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -917,6 +1030,25 @@ body {
   }
 
   .anime-detail .slider-inner::before { display: none; }
+
+  /* PROFILE PAGE */
+  .profile-container .user-info .top-content .add-to-friends-button i {
+    display: none;
+  }
+
+  .profile-container .user-info .top-content .add-to-friends-button span {
+    display: flex;
+  }
+
+  .profile-container .user-info .top-content .user-avatar {
+    width: 75px;
+    height: 75px;
+  }
+
+  .personal-figure {
+    width: 70px;
+    height: 70px;
+  }
 }
 
 @media (min-width: 1024px) {

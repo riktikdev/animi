@@ -28,17 +28,20 @@ SECRET_KEY = 'django-insecure-j6$i^fc_0(z4bi2^5a2#n81$qx^y$l*&#*#5-u6rm9ktp^vbgh
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+LOGIN_URL = reverse_lazy("user:login")
+LOGIN_REDIRECT_URL = reverse_lazy("user:profile")
 
 # Application definition
 
 INSTALLED_APPS = [
-    'main',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'main',
+    'user',
 ]
 
 MIDDLEWARE = [

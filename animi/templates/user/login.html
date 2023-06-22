@@ -44,10 +44,10 @@
             <div class="search-box" search-box>
                 <div class="search-wrapper" search-wrapper>
                     <input type="text" name="search" aria-label="search anime" placeholder="Поиск ..." class="search-field" search-field>
-    
+
                     <img src="{% static 'main/img/search.png' %}" width="24" height="24" alt="search" class="leading-icon">
                 </div>
-    
+
                 <button class="search-btn" search-toggler>
                     <img src="{% static 'main/img/close.png' %}" width="24" height="24" alt="close search box">
                 </button>
@@ -196,31 +196,31 @@
     </nav>
     <div class="overlay" overlay menu-toggler></div>
 
-    <article class="container">
-        <section class="movie-list genre-list">
-            <div class="title-wrapper">
-                <h1 class="heading">Аниме жанра «{% if genre_name %}{{ genre_name }}{% endif %}»</h1>
-            </div>
-
-            <div class="grid-list">
-                {% for genre_item in anime_data %}
-                    <div class="anime-card">
-                        <figure class="poster-box card-banner">
-                            <img src="{{ genre_item.poster_url }}" class="img-cover">
-                        </figure>
-                        <h4 class="title">{{ genre_item.title }}</h4>
-                        <div class="meta-list">
-                            <div class="meta-item">
-                                <img src="{% static 'main/img/star.png' %}" width="24" height="24" loading="lazy" alt="rating">
-                                <span class="span">{{ genre_item.rating }}</span>
-                            </div>
-                            <div class="card-badge">{{ genre_item.year }}</div>
+    <article class="container" page-content>
+        <div class="login-container">
+            <div class="form login">
+                <div class="form-content">
+                    <h2>Авторизация</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="field input-field">
+                            <input type="text" name="username" placeholder="Имя пользователя" class="input">
                         </div>
-                        <a href="{% url 'playerpage' pk=genre_item.title %}" class="card-btn" title="{{ genre_item.title }}"></a>
-                    </div>
-                {% endfor %}
+                        <div class="field input-field">
+                            <input type="password" name="password" placeholder="Пароль" class="password">
+                            <i class='bx bx-hide eye-icon'></i>
+                        </div>
+                        <div class="form-link">
+                            <span><a href="{% url 'register' %}" class="link signup-link">Создать аккаунт</a></span>
+                            <span><a href="#" class="link signup-link">Забыли пароль?</a></span>
+                        </div>
+                        <div class="field button-field">
+                            <button>Продолжить</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </section>
+        </div>
     </article>
 </body>
 </html>
