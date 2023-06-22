@@ -201,8 +201,23 @@
 
     <article class="container" page-content>
         <div class="profile-container">
-            <div class="user-banner" style="background-image: url('https://media.tenor.com/-NkL2pGJTQsAAAAC/uw-u-oshi-no-ko.gif')">
-                <a href="#" class="edit"></a>
+            {% if profile.user.profile.profile_banner %}
+                <div class="user-banner" style="background-image: url('{{ profile.user.profile.profile_banner.url }}')">
+            {% else %}
+                <div class="user-banner" style="background-color: #0072e6">
+            {% endif %}
+                {% if request.user.id == profile.user.id %}
+                    <div class="select-user-banner">
+                        <label class="label">
+                            <form method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="hidden" name="form_type" value="banner">
+                                <input accept=".png,.jpg,.jpeg,.gif" type="file" name="profile_banner" onchange="this.form.submit()">
+                            </form>
+                            <i class="fa-solid fa-pen-to-square" style="cursor: pointer"></i>
+                        </label>
+                    </div>
+                {% endif %}
             </div>
             <div class="user-info">
                 <div class="top-content">
@@ -211,6 +226,7 @@
                             {% if request.user.id == profile.user.id %}
                                 <form method="POST" enctype="multipart/form-data">
                                     {% csrf_token %}
+                                    <input type="hidden" name="form_type" value="avatar">
                                     <input accept=".png,.jpg,.jpeg,.gif" type="file" name="profile_image" onchange="this.form.submit()">
                                 </form>
                                 <figure class="personal-figure">
@@ -239,7 +255,7 @@
                     </div>
                     <div class="username-last-visit">
                         <div class="username">{% if profile %}{{ profile.user.username }}{% endif %}</div>
-                        <div class="last-visit">Сегодня в 03:29</div>
+                        <div class="last-visit">{% if profile %}{{ profile.user.last_login }}{% endif %}</div>
                     </div>
                     {% if request.user.id != profile.user.id %}
                         <a href="#" class="add-to-friends-button"><i class="fa-solid fa-user-plus"></i><span>Отправить запрос дружбы</span></a>
@@ -248,7 +264,7 @@
                 <div class="bottom-content">
                     <div class="description">
                         <h5>Обо мне</h5>
-                        <span>私はダーシャという女の子が好きです。否定もしないし、隠しもしない。</span>
+                        <span>{% if profile %}{{ profile.profile_bio }}{% endif %}</span>
                     </div>
                     <div class="signup-date">
                         <h5>В нашей семье с</h5>

@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 
-from .forms import SignupForm, ProfilePictureForm
+from .forms import SignupForm, ProfilePictureForm, ProfileBannerForm
 from .models import Profile
 
 
@@ -18,10 +18,17 @@ def profile(request, pk):
     if request.user.is_authenticated:
         profile = Profile.objects.get(user_id=pk)
         if request.method == 'POST':
-            form = ProfilePictureForm(request.POST, request.FILES, instance=profile)
-            if form.is_valid():
-                form.save()
-                return redirect('profile', pk=pk)
+            form_type = request.POST.get('form_type')
+            if form_type == 'avatar':
+                form = ProfilePictureForm(request.POST, request.FILES, instance=profile)
+                if form.is_valid():
+                    form.save()
+                    return redirect('profile', pk=pk)
+            elif form_type == 'banner':
+                form = ProfileBannerForm(request.POST, request.FILES, instance=profile)
+                if form.is_valid():
+                    form.save()
+                    return redirect('profile', pk=pk)
         else:
             form = ProfilePictureForm(instance=profile)
         return render(request, 'user/profile.html', {"profile": profile, "form": form})
