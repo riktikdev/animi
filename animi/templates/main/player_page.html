@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- PRIMARY META TAGS -->
-    <title>AniMi</title>
-    <meta name="title" content="{% if anime_data %}{{ anime_data.title }}{% endif %}">
-    <meta name="description" content="{% if anime_data %}{{ anime_data.title }}{% endif %}">
+    <title>{% for anime in anime_data %}{{ anime.title }}{% endfor %}</title>
+    <meta name="title" content="{% for anime in anime_data %}{{ anime.title }}{% endfor %}">
+    <meta name="description" content="{% for anime in anime_data %}{{ anime.description }}{% endfor %}">
 
     <!-- FAVICON -->
     <link rel="shortcut icon" href="{% static 'main/img/favicon.svg' %}" type="image/svg+xml">

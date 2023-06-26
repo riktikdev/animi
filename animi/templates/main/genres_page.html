@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- PRIMARY META TAGS -->
-    <title>AniMi</title>
-    <meta name="title" content="AniMi">
-    <meta name="description" content="AniMi — платформа для просмотра аниме. Захватывающие аниме разных жанров с уникальными персонажами и потрясающей рисовкой.">
+    <title>{% if genre_name %}{{ genre_name }}{% endif %}</title>
+    <meta name="title" content="{% if genre_name %}{{ genre_name }}{% endif %}">
+    <meta name="description" content="AniMi — аниме жанра «{% if genre_name %}{{ genre_name }}{% endif %}»">
 
     <!-- FAVICON -->
     <link rel="shortcut icon" href="{% static 'main/img/favicon.svg' %}" type="image/svg+xml">

@@ -7,5 +7,6 @@ urlpatterns = [
     path('anime/<str:pk>', views.player_page, name='playerpage'),
     path('genres/<str:pk>', views.genres_page, name='genrespage'),
     path('search/<str:pk>', views.search_page, name='searchpage'),
-    path('user/', include('user.urls'))
+    path('user/', include('user.urls')),
+    path('ads.txt', views.AdsTxtView.as_view()),
 ]

@@ -8,8 +8,12 @@
 
     <!-- PRIMARY META TAGS -->
     <title>AniMi</title>
-    <meta name="title" content="AniMi">
-    <meta name="description" content="AniMi — платформа для просмотра аниме. Захватывающие аниме разных жанров с уникальными персонажами и потрясающей рисовкой.">
+    <meta name="title" content="Смотреть аниме на AniMi">
+    <meta property="og:title" content="Смотреть аниме на AniMi">
+    <meta name="description" content="AniMi — платформа для просмотра аниме. Захватывающие серии и сезоны множества аниме и мультфильмов с уникальными персонажами и потрясающей рисовкой. Лучшие аниме, которые можно посмотреть у нас.">
+    <meta property="og:description" content="AniMi — платформа для просмотра аниме. Захватывающие серии и сезоны множества аниме и мультфильмов с уникальными персонажами и потрясающей рисовкой. Лучшие аниме, которые можно посмотреть у нас.">
+    <meta name="keywords" content="мультфильмы, аниме, смотреть, онлайн, видео, серии, сезоны, эпизоды">
+    <link href="https://animi.site/" rel="canonical">
 
     <!-- FAVICON -->
     <link rel="shortcut icon" href="{% static 'main/img/favicon.svg' %}" type="image/svg+xml">
@@ -203,7 +207,7 @@
                 <div class="banner-slider">
                     {% for slider_item in banner %}
                     <div class="slider-item {% if slider_item.active %}active{% endif %}" slider-item>
-                        <img src="{{ slider_item.screenshot }}" alt="Anime Name" class="img-cover" loading="eager">
+                        <img src="{{ slider_item.screenshot }}" alt="{{ slider_item.title }}" class="img-cover" loading="eager">
                         <div class="banner-content">
                             <h2 class="heading">
                                 {{ slider_item.title }}
