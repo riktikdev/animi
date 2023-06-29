@@ -14,6 +14,9 @@
     <!-- FAVICON -->
     <link rel="shortcut icon" href="{% static 'main/img/favicon.svg' %}" type="image/svg+xml">
 
+    <!-- FONTAWESOME -->
+    <script src="https://kit.fontawesome.com/f3d6a932e2.js" crossorigin="anonymous"></script>
+
     <!-- ION ICONS -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -266,6 +269,31 @@
                 </div>
             </div>
         </section> -->
+
+        <footer class="footer">
+            <div class="links">
+                <a href="{% url 'terms' %}" menu-close class="sidebar-link">
+                    <i class="fa-solid fa-handshake"></i><span>Соглашение</span>
+                </a>
+                <a href="{% url 'privacy' %}" menu-close class="sidebar-link">
+                    <i class="fa-solid fa-lock"></i><span>Конфиденциальность</span>
+                </a>
+                <a href="{% url 'copyright' %}" menu-close class="sidebar-link">
+                    <i class="fa-solid fa-copyright"></i><span>Для правообладателей</span>
+                </a>
+            </div>
+            <div class="social-links">
+                <a href="discord.gg/t983xN6PBw" menu-close class="sidebar-link">
+                    <i class="fa-brands fa-discord"></i>
+                </a>
+                <a href="tiktok.com/@animi_official" menu-close class="sidebar-link">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+                <a href="youtube.com/@animiofficial" menu-close class="sidebar-link">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
+        </footer>
     </article>
 </body>
 </html>

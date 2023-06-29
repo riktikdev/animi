@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- PRIMARY META TAGS -->
-    <title>Результаты поиска: {% if search_title %}{{ search_title }}{% endif %}</title>
+    <title>Правообладателям</title>
+    <meta name="title" content="AniMi — Правообладателям">
 
     <!-- FAVICON -->
     <link rel="shortcut icon" href="{% static 'main/img/favicon.svg' %}" type="image/svg+xml">
@@ -45,10 +46,10 @@
             <div class="search-box" search-box>
                 <div class="search-wrapper" search-wrapper>
                     <input type="text" name="search" aria-label="search anime" placeholder="Поиск ..." class="search-field" search-field>
-    
+
                     <img src="{% static 'main/img/search.png' %}" width="24" height="24" alt="search" class="leading-icon">
                 </div>
-    
+
                 <button class="search-btn" search-toggler>
                     <img src="{% static 'main/img/close.png' %}" width="24" height="24" alt="close search box">
                 </button>
@@ -196,30 +197,16 @@
         </div>
     </nav>
     <div class="overlay" overlay menu-toggler></div>
+
     <article class="container">
-        <div class="search-modal active">
-            <p class="label">Результаты поиска по запросу:</p>
-            <h1 class="heading">{% if search_title %}{{ search_title }}{% endif %}</h1>
-            <div class="movie-list">
-                <div class="grid-list">
-                    {% for search_item in anime_data %}
-                        <div class="anime-card">
-                            <figure class="poster-box card-banner">
-                                <img src="{{ search_item.poster_url }}" class="img-cover">
-                            </figure>
-                            <h4 class="title">{{ search_item.title }}</h4>
-                            <div class="meta-list">
-                                <div class="meta-item">
-                                    <img src="{% static 'main/img/star.png' %}" width="24" height="24" loading="lazy" alt="rating">
-                                    <span class="span">{{ search_item.rating }}</span>
-                                </div>
-                                <div class="card-badge">{{ search_item.year }}</div>
-                            </div>
-                            <a href="{% url 'playerpage' pk=search_item.title %}" class="card-btn" title="{{ search_item.poster_url }}"></a>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
+        <div class="rules-content">
+            <h1>Правообладателям</h1>
+            <p>Все размещенные на ресурсе материалы находятся в свободном доступе и могут быть бесплатно скачаны из интернета. Сбор информации в сети и размещение контента в каталоге производится в автоматическом режиме.</p>
+            <p>Публикация нелицензионного, похищенного контента и материалов, защищенных авторским правом, не допускается. Администрация размещает только любительские русскоязычные материалы из свободных источников при использовании автоматической системы.</p>
+            <p>На сайте «AniMi», публикуются только фрагменты материалов, переведенные на русский язык, а также контент с любительским переводом для ознакомительного просмотра. Размещение оригинальных, непереведенных материалов невозможно</p>
+            <p>Администрация ресурса предлагает сотрудничество с правообладателями контента. В случае нарушения прав собственности сайт обязуется убрать неправомерно размещенный материал или предложить выгодные условия сотрудничества правообладателю.</p>
+            <p>Если вы обнаружили материал, представленный на нашем сайте, который нарушает ваши авторские права, или же дискредитирует Вашу компанию, предоставляя неверную или искаженную информацию, пожалуйста свяжитесь с нами для решения этого вопроса.</p>
+            <p>Для этого необходимо отправить E-Mail с вашего почтового ящика содержащий: контактные данные, реквизиты вашей компании; прямую ссылку(ссылки) на материал, который вы считаете спорным; заверенные сканированные копии документов, подтверждающих ваше эксклюзивное право на материал; в случае, если вы представляете интересы другой компании – копии документов на посреднические услуги, на адрес animi.technical@gmail.com</p>
         </div>
 
         <footer class="footer">
@@ -230,7 +217,7 @@
                 <a href="{% url 'privacy' %}" menu-close class="sidebar-link">
                     <i class="fa-solid fa-lock"></i><span>Конфиденциальность</span>
                 </a>
-                <a href="{% url 'for-right-holders' %}" menu-close class="sidebar-link">
+                <a href="{% url 'copyright' %}" menu-close class="sidebar-link">
                     <i class="fa-solid fa-copyright"></i><span>Для правообладателей</span>
                 </a>
             </div>

@@ -161,3 +161,15 @@ def search_page(request, pk):
 class AdsTxtView(TemplateView):
     template_name = 'ads.txt'
     content_type = 'text/plain'
+
+
+def terms_page(request):
+    return render(request, 'main/terms.html')
+
+
+def privacy_page(request):
+    return render(request, 'main/privacy.html')
+
+
+def copyright_page(request):
+    return render(request, 'main/copyright.html')

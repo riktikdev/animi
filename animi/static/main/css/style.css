@@ -19,7 +19,7 @@
 
   /* GRADIENT COLORS */
   --banner-overlay: 90deg, #111111 0%, #0f111580 100%;
-  --bottom-overlay: 180deg, #1a182000, #141414;
+  --bottom-overlay: 180deg, #1a182000, #141414af;
 
   /* TYPOGRAPHY */
   --ff-rk-sans: 'Rubik', sans-serif;
@@ -410,6 +410,44 @@ body {
 }
 
 /*-----------------------------------*\
+  #FOOTER
+\*-----------------------------------*/
+
+.footer {
+  background-color: transparent;
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: center;
+  align-items: center;
+  padding-block: 24px;
+  padding-inline: 16px;
+  padding: 10px;
+}
+
+.footer .links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-right: 15px;
+}
+
+.footer .links .sidebar-link {
+  padding: 5px;
+}
+
+.footer .social-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer .social-links .sidebar-link {
+  padding: 5px;
+}
+
+/*-----------------------------------*\
   #SIDEBAR
 \*-----------------------------------*/
 
@@ -503,7 +541,7 @@ body {
   position: relative;
   background-color: var(--surface);
   color: var(--on-surface);
-  padding: 24px 20px 48px;
+  padding: 24px 20px 0;
   height: calc(100vh - 96px);
   overflow-y: overlay;
   z-index: 1;
@@ -968,6 +1006,23 @@ body {
 }
 
 /*-----------------------------------*\
+  #TERMS, PRIVACY AND FOR RIGHT HOLDERS
+\*-----------------------------------*/
+
+.rules-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 1000px;
+  width: 100%;
+  margin: auto;
+}
+
+.rules-content p {
+  margin-bottom: 10px;
+}
+
+/*-----------------------------------*\
   #MEDIA QUERIES
 \*-----------------------------------*/
 
@@ -1003,6 +1058,11 @@ body {
   .personal-figure {
     width: 60px;
     height: 60px;
+  }
+
+  /* FOOTER */
+  .footer .links span {
+    display: none;
   }
 }
 
@@ -1079,6 +1139,14 @@ body {
   .personal-figure {
     width: 70px;
     height: 70px;
+  }
+
+  /* FOOTER */
+  .footer .links span {
+    display: flex;
+  }
+  .footer .links i {
+    display: none;
   }
 }
 
