@@ -163,6 +163,16 @@ class AdsTxtView(TemplateView):
     content_type = 'text/plain'
 
 
+class RobotsTxtView(TemplateView):
+    template_name = 'robots.txt'
+    content_type = 'text/plain'
+
+
+class SitemapXmlView(TemplateView):
+    template_name = 'sitemap.xml'
+    content_type = 'application/xml'
+
+
 def terms_page(request):
     return render(request, 'main/terms.html')
 
