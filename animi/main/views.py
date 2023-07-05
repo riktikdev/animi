@@ -424,6 +424,32 @@ def search_page(request, pk):
     return render(request, 'main/search_page.html', context)
 
 
+def genres_page(request, pk):
+    anilibria_parser = AnilibriaParser()
+    kodik_parser = KodikParser()
+
+    sidebar_content = anilibria_parser.get_genres_list()
+    genres_content = anilibria_parser.get_anime_list_by_genre(pk)
+
+    genres_data = []
+
+    for item in genres_content['list']:
+        code = item['code']
+        title = item['names']['ru']
+        rating = kodik_parser.get_rating_by_code(code)
+        year = item['season']['year']
+        poster = anilibria_parser.base_image_url + item['posters']['original']['url']
+        genres_data.append({'code': code, 'title': title, 'rating': rating, 'year': year, 'poster_url': poster})
+
+    context = {
+        'genres_list': sidebar_content,
+        'genre_name': pk,
+        'genres_results': genres_data,
+    }
+
+    return render(request, 'main/genres_page.html', context)
+
+
 class AdsTxtView(TemplateView):
     template_name = 'ads.txt'
     content_type = 'text/plain'
@@ -437,10 +463,6 @@ class RobotsTxtView(TemplateView):
 class SitemapXmlView(TemplateView):
     template_name = 'sitemap.xml'
     content_type = 'application/xml'
-
-
-def genres_page(request):
-    pass
 
 
 def terms_page(request):
