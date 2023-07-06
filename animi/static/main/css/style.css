@@ -407,6 +407,8 @@ body {
   border-radius: 50px;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 /*-----------------------------------*\
@@ -875,7 +877,9 @@ body {
   height: 100%;
   box-sizing: border-box;
   border-radius: 100%;
-  transition: var(--transition-short)
+  object-fit: cover;
+  object-position: center;
+  transition: var(--transition-short);
 }
 .personal-figcaption {
   display: flex;
@@ -888,7 +892,7 @@ body {
   border-radius: 100%;
   opacity: 0;
   background-color: rgba(0, 0, 0, 0);
-  transition: var(--transition-short)
+  transition: var(--transition-short);
 }
 .personal-figcaption:hover {
   opacity: 1;
@@ -1023,6 +1027,24 @@ body {
 }
 
 /*-----------------------------------*\
+  #STATUS CODE PAGE
+\*-----------------------------------*/
+
+.status-code-content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.status-code-content span {
+  font-weight: var(--weight-semibold);
+  line-height: 0.9;
+}
+
+/*-----------------------------------*\
   #MEDIA QUERIES
 \*-----------------------------------*/
 
@@ -1063,6 +1085,15 @@ body {
   /* FOOTER */
   .footer .links span {
     display: none;
+  }
+
+  /* STATUS CODE PAGE */
+  .status-code-content span {
+    font-size: 130px;
+  }
+
+  .status-code-content h1 {
+    font-size: 25px;
   }
 }
 

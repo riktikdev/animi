@@ -1,4 +1,4 @@
-{% load static %}
+{% load static cache %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,32 +87,33 @@
 
     <main>
         <!-- SIDEBAR -->
-<!--        <nav class="sidebar" sidebar>-->
-<!--            <div class="sidebar-inner">-->
-<!--                <div class="sidebar-list">-->
-<!--                    <p class="title">Жанр</p>-->
-<!--                    {% for genre in genres_list %}-->
-<!--                        <a href="{% url 'genrespage' pk=genre %}" menu-close class="sidebar-link">-->
-<!--                            {{ genre }}-->
-<!--                        </a>-->
-<!--                    {% endfor %}-->
-<!--                </div>-->
+        <nav class="sidebar" sidebar>
+            <div class="sidebar-inner">
+                <div class="sidebar-list">
+                    <p class="title">Жанр</p>
+                    {% for genre in genres_list %}
+                        <a href="{% url 'genrespage' pk=genre %}" menu-close class="sidebar-link">
+                            {{ genre }}
+                        </a>
+                    {% endfor %}
+                </div>
 
-<!--                <div class="sidebar-footer">-->
-<!--                    <p class="copyright">-->
-<!--                        Copyright 2023 <a href="https://animi.site">AniMi</a>-->
-<!--                    </p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </nav>-->
+                <div class="sidebar-footer">
+                    <p class="copyright">
+                        Copyright 2023 <a href="https://animi.site">AniMi</a>
+                    </p>
+                </div>
+            </div>
+        </nav>
         <div class="overlay" overlay menu-toggler></div>
         
         <article class="container" page-content>
             <!-- BANNER -->
             <section class="banner" aria-label="popular anime">
+                {% cache 3600 banner_cache %}
                 <div class="banner-slider">
                     {% for slider_item in banner %}
-                    <div class="slider-item {% if slider_item.active %}active{% endif %}" slider-item>
+                    <div class="slider-item {% if forloop.first %}active{% endif %}" slider-item>
                         <img src="{{ slider_item.screenshot }}" alt="{{ slider_item.title }}" class="img-cover" loading="eager">
                         <div class="banner-content">
                             <h2 class="heading">
@@ -141,12 +142,13 @@
                 <div class="slider-control">
                     <div class="control-inner">
                         {% for slider_item in banner %}
-                            <button class="poster-box slider-item {% if slider_item.active %}active{% endif %}">
-                                <img src="{{ slider_item.poster_url }}" loading="lazy" draggable="false" class="img-cover">
-                            </button>
+                        <button class="poster-box slider-item {% if slider_item.active %}active{% endif %}">
+                            <img src="{{ slider_item.poster_url }}" loading="lazy" draggable="false" class="img-cover">
+                        </button>
                         {% endfor %}
                     </div>
                 </div>
+                {% endcache %}
             </section>
 
             <!-- ANIME LIST -->
@@ -156,6 +158,7 @@
                 </div>
                 <div class="slider-list">
                     <div class="slider-inner">
+                        {% cache 3600 changes_cache %}
                         {% for change in changes %}
                             <div class="anime-card">
                                 <figure class="poster-box card-banner">
@@ -172,6 +175,7 @@
                                 <a href="/anime/{{ change.code }}" class="card-btn" title="{{ change.title }}"></a>
                             </div>
                         {% endfor %}
+                        {% endcache %}
                     </div>
                 </div>
             </section>
@@ -181,6 +185,7 @@
                 </div>
                 <div class="slider-list">
                     <div class="slider-inner">
+                        {% cache 3600 updates_cache %}
                         {% for update in updates %}
                             <div class="anime-card">
                                 <figure class="poster-box card-banner">
@@ -197,6 +202,7 @@
                                 <a href="/anime/{{ update.code }}" class="card-btn" title="{{ coming_soon.title }}"></a>
                             </div>
                         {% endfor %}
+                        {% endcache %}
                     </div>
                 </div>
             </section>

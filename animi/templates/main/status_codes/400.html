@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- PRIMARY META TAGS -->
+    <title>Плохой запрос</title>
+    <meta name="title" content="AniMi — Bad Request">
+
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="{% static 'main/img/favicon.svg' %}" type="image/svg+xml">
+
+    <!-- FONTAWESOME -->
+    <script src="https://kit.fontawesome.com/f3d6a932e2.js" crossorigin="anonymous"></script>
+
+    <!-- ION ICONS -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- GOOGLE FONT LINK -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- CUSTOM CSS LINK -->
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+
+    <!-- CUSTOM JS LINK -->
+    <!-- <script src="./assets/js/global.js" defer></script> -->
+    <script src="{% static 'main/js/index.js' %}" defer></script>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <a href="{% url 'mainpage' %}" class="logo">
+            <img src="{% static 'main/img/logo.svg' %}" width="140" height="32" alt="AniMi Главная">
+        </a>
+
+        <form action="/search" class="search-form" method="GET">
+            <div class="search-box" search-box>
+                <div class="search-wrapper" search-wrapper>
+                    <input type="text" name="search" aria-label="search anime" placeholder="Поиск ..." class="search-field" search-field>
+
+                    <img src="{% static 'main/img/search.png' %}" width="24" height="24" alt="search" class="leading-icon">
+                </div>
+
+                <button class="search-btn" search-toggler>
+                    <img src="{% static 'main/img/close.png' %}" width="24" height="24" alt="close search box">
+                </button>
+            </div>
+        </form>
+
+        <button class="search-btn" search-toggler menu-close>
+          <img src="{% static 'main/img/search.png' %}" width="24" height="24" alt="open search box">
+        </button>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'profile' request.user.id %}" class="user-btn">
+                {% if user.profile.profile_image %}
+                <img src="{{ user.profile.profile_image.url }}">
+                {% else %}
+                <ion-icon name="person-circle-outline"></ion-icon>
+                {% endif %}
+            </a>
+        {% else %}
+            <a href="{% url 'login' %}" class="user-btn">
+                <ion-icon name="log-in-outline"></ion-icon>
+            </a>
+        {% endif %}
+    </header>
+
+    <div class="overlay" overlay menu-toggler></div>
+
+    <article class="container">
+        <div class="status-code-content">
+            <span class="text-status-code">400</span>
+            <h1>Плохой запрос"</h1>
+            <a href="{% url 'mainpage' %}" class="btn load-more">На главную</a>
+        </div>
+    </article>
+</body>
+</html>

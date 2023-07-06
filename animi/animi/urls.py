@@ -21,6 +21,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
 
+
+handler400 = 'animi.views.handler400'
+handler403 = 'animi.views.handler403'
+handler404 = 'animi.views.handler404'
+handler500 = 'animi.views.handler500'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('favicon.ico', RedirectView.as_view(url='/static/main/img/favicon.svg')),

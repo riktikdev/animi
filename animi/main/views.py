@@ -1,4 +1,8 @@
+from django.core.cache import cache
+
+
 import requests
+from django.core.cache.utils import make_template_fragment_key
 from django.shortcuts import render
 import random
 from time import perf_counter
@@ -123,7 +127,7 @@ class KodikParser:
                         if rating is not None and rating != 0:
                             return rating
                 return '-'
-            return None
+            return '-'
         else:
             print(f'Error when receiving data. Error code status: {response.status_code}')
             return None
@@ -167,50 +171,70 @@ def main_page(request):
     anilibria_parser = AnilibriaParser()
     kodik_parser = KodikParser()
 
-    #sidebar_content = anilibria_parser.get_genres_list()
+    sidebar_content = anilibria_parser.get_genres_list()
+
     banner_content = anilibria_parser.get_banner_content()
+    banner_data = (
+        {
+            'code': item['code'],
+            'title': item['names']['ru'],
+            'rating': kodik_parser.get_rating_by_code(item['code']),
+            'year': item['season']['year'],
+            'description': item['description'],
+            'genre': ', '.join(item['genres']),
+            'poster_url': anilibria_parser.base_image_url + item['posters']['original']['url'],
+            'screenshot': kodik_parser.get_screenshots_by_code(item['code'], 'random')
+        }
+        for item in banner_content['list']
+    )
+
     changes_content = anilibria_parser.get_changes_content()
+    changes_data = (
+        {
+            'code': item['code'],
+            'title': item['names']['ru'],
+            'rating': kodik_parser.get_rating_by_code(item['code']),
+            'year': item['season']['year'],
+            'poster_url': anilibria_parser.base_image_url + item['posters']['original']['url']
+        }
+        for item in changes_content['list']
+    )
+
     updates_content = anilibria_parser.get_updates_content()
-
-    banner_data = []
-    changes_data = []
-    updates_data = []
-
-    for item in banner_content['list']:
-        code = item['code']
-        title = item['names']['ru']
-        rating = kodik_parser.get_rating_by_code(code)
-        year = item['season']['year']
-        description = item['description']
-        genres = ', '.join(item['genres'])
-        poster = anilibria_parser.base_image_url + item['posters']['original']['url']
-        screenshot = kodik_parser.get_screenshots_by_code(code, 'random')
-        banner_data.append(
-            {'code': code, 'title': title, 'rating': rating, 'year': year, 'description': description, 'genre': genres,
-             'poster_url': poster, 'screenshot': screenshot})
-
-    for item in changes_content['list']:
-        code = item['code']
-        title = item['names']['ru']
-        rating = kodik_parser.get_rating_by_code(code)
-        year = item['season']['year']
-        poster = anilibria_parser.base_image_url + item['posters']['original']['url']
-        changes_data.append({'code': code, 'title': title, 'rating': rating, 'year': year, 'poster_url': poster})
-
-    for item in updates_content['list']:
-        code = item['code']
-        title = item['names']['ru']
-        rating = kodik_parser.get_rating_by_code(code)
-        year = item['season']['year']
-        poster = anilibria_parser.base_image_url + item['posters']['original']['url']
-        updates_data.append({'code': code, 'title': title, 'rating': rating, 'year': year, 'poster_url': poster})
+    updates_data = (
+        {
+            'code': item['code'],
+            'title': item['names']['ru'],
+            'rating': kodik_parser.get_rating_by_code(item['code']),
+            'year': item['season']['year'],
+            'poster_url': anilibria_parser.base_image_url + item['posters']['original']['url']
+        }
+        for item in updates_content['list']
+    )
 
     context = {
-        #'genres_list': sidebar_content,
+        'genres_list': sidebar_content,
         'banner': banner_data,
         'changes': changes_data,
         'updates': updates_data,
     }
+
+    # Сравнение текущего контента с кэшем
+    banner_cache_key = make_template_fragment_key('banner_cache')
+    changes_cache_key = make_template_fragment_key('changes_cache')
+    updates_cache_key = make_template_fragment_key('updates_cache')
+
+    if banner_cache_key != cache.get('banner_cache_key', ''):
+        cache.delete('banner_cache')
+        cache.set('banner_cache_key', banner_cache_key)
+
+    if changes_cache_key != cache.get('changes_cache_key', ''):
+        cache.delete('changes_cache')
+        cache.set('changes_cache_key', changes_cache_key)
+
+    if updates_cache_key != cache.get('updates_cache_key', ''):
+        cache.delete('updates_cache')
+        cache.set('updates_cache_key', updates_cache_key)
 
     return render(request, 'main/main_page.html', context)
 
@@ -219,7 +243,7 @@ def player_page(request, pk):
     anilibria_parser = AnilibriaParser()
     kodik_parser = KodikParser()
 
-    #sidebar_content = anilibria_parser.get_genres_list()
+    sidebar_content = anilibria_parser.get_genres_list()
     detail = anilibria_parser.get_anime_by_code(pk)
 
     title = detail['names']['ru']
@@ -233,7 +257,7 @@ def player_page(request, pk):
     player = kodik_parser.get_player_by_code(pk)
 
     context = {
-        #'genres_list': sidebar_content,
+        'genres_list': sidebar_content,
         'title': title,
         'description': description,
         'genres': genres,
@@ -252,21 +276,22 @@ def search_page(request, pk):
     anilibria_parser = AnilibriaParser()
     kodik_parser = KodikParser()
 
-    #sidebar_content = anilibria_parser.get_genres_list()
+    sidebar_content = anilibria_parser.get_genres_list()
     search_content = anilibria_parser.search_anime_by_request(pk)
 
-    result_content = []
-
-    for item in search_content['list']:
-        code = item['code']
-        title = item['names']['ru']
-        rating = kodik_parser.get_rating_by_code(code)
-        year = item['season']['year']
-        poster = anilibria_parser.base_image_url + item['posters']['original']['url']
-        result_content.append({'code': code, 'title': title, 'rating': rating, 'year': year, 'poster_url': poster})
+    result_content = [
+        {
+            'code': item['code'],
+            'title': item['names']['ru'],
+            'rating': kodik_parser.get_rating_by_code(item['code']),
+            'year': item['season']['year'],
+            'poster_url': anilibria_parser.base_image_url + item['posters']['original']['url']
+        }
+        for item in search_content['list']
+    ]
 
     context = {
-        #'genres_list': sidebar_content,
+        'genres_list': sidebar_content,
         'search_title': pk,
         'search_results': result_content,
     }
@@ -278,21 +303,22 @@ def genres_page(request, pk):
     anilibria_parser = AnilibriaParser()
     kodik_parser = KodikParser()
 
-    #sidebar_content = anilibria_parser.get_genres_list()
+    sidebar_content = anilibria_parser.get_genres_list()
     genres_content = anilibria_parser.get_anime_list_by_genre(pk)
 
-    genres_data = []
-
-    for item in genres_content['list']:
-        code = item['code']
-        title = item['names']['ru']
-        rating = kodik_parser.get_rating_by_code(code)
-        year = item['season']['year']
-        poster = anilibria_parser.base_image_url + item['posters']['original']['url']
-        genres_data.append({'code': code, 'title': title, 'rating': rating, 'year': year, 'poster_url': poster})
+    genres_data = [
+        {
+            'code': item['code'],
+            'title': item['names']['ru'],
+            'rating': kodik_parser.get_rating_by_code(item['code']),
+            'year': item['season']['year'],
+            'poster_url': anilibria_parser.base_image_url + item['posters']['original']['url']
+        }
+        for item in genres_content['list']
+    ]
 
     context = {
-        #'genres_list': sidebar_content,
+        'genres_list': sidebar_content,
         'genre_name': pk,
         'genres_results': genres_data,
     }
