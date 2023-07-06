@@ -163,161 +163,11 @@ class KodikParser:
             return None
 
 
-# async def main_page(request):
-#     anilibria_parser = AnilibriaParser()
-#     kodik_parser = KodikParser()
-#
-#     banner_data = await anilibria_parser.get_banner_content()
-#     changes_data = await anilibria_parser.get_changes_content()
-#     updates_data = await anilibria_parser.get_updates_content()
-#
-#     data_genres = await anilibria_parser.get_genres_list()
-#
-#     banner_dict = {}
-#     changes_dict = {}
-#     updates_dict = {}
-#
-#     if banner_data:
-#         for item in banner_data:
-#             code = item['code']
-#             title_ru = item['names']['ru']
-#             if title_ru not in banner_dict:
-#                 screenshots = await kodik_parser.get_screenshots_by_code(code)
-#                 random_screenshot = random.choice(screenshots) if screenshots else None
-#                 banner_dict[title_ru] = {
-#                     'code': code,
-#                     'poster_url': anilibria_parser.base_image_url + item['posters']['original']['url'],
-#                     'year': item['season']['year'],
-#                     'genre': ', '.join(item['genres']),
-#                     'description': item['description'],
-#                     'title': title_ru,
-#                     'screenshot': random_screenshot
-#                 }
-#
-#     if changes_data:
-#         for item in changes_data:
-#             code = item['code']
-#             title_ru = item['names']['ru']
-#             if title_ru not in changes_dict:
-#                 changes_dict[title_ru] = {
-#                     'code': code,
-#                     'poster_url': anilibria_parser.base_image_url + item['posters']['original']['url'],
-#                     'year': item['season']['year'],
-#                     'title': title_ru,
-#                 }
-#
-#     if updates_data:
-#         for item in updates_data:
-#             code = item['code']
-#             title_ru = item['names']['ru']
-#             if title_ru not in updates_dict:
-#                 updates_dict[title_ru] = {
-#                     'code': code,
-#                     'poster_url': anilibria_parser.base_image_url + item['posters']['original']['url'],
-#                     'year': item['season']['year'],
-#                     'title': title_ru,
-#                 }
-#
-#     data_banner = list(banner_dict.values())[:15]
-#     data_changes = list(changes_dict.values())[:15]
-#     data_updates = list(updates_dict.values())][:15]
-#
-#     return render(request, 'main_page.html', {
-#         'data_banner': data_banner,
-#         'data_changes': data_changes,
-#         'data_updates': data_updates,
-#         'data_genres': data_genres,
-#     })
-
-
-# async def player_page(request, pk):
-#     # URL адреса
-#     anilibria_data_url = f'https://api.anilibria.tv/v3/title?code={pk}'
-#     data_genres = await AnilibriaParser().get_genres_list()
-#     kodik_data_url = f'https://kodikapi.com/search?token=71d163b40d50397a86ca54c366f33b72&types=anime,anime-serial&limit=1&title={pk}&with_material_data=true'
-#
-#     # Запросы
-#     async with aiohttp.ClientSession() as session:
-#         anilibria_response = await session.get(anilibria_data_url)
-#         anilibria_data = await anilibria_response.json()
-#         kodik_response = await session.get(kodik_data_url)
-#         kodik_data = await kodik_response.json()
-#
-#     # Получение данных JSON ответа
-#     # Информация о аниме
-#     code = anilibria_data['code']
-#     title_ru = anilibria_data['names']['ru']
-#     year = anilibria_data['season']['year']
-#     poster_url = base_image_url + anilibria_data['posters']['original']['url']
-#     screenshots = await KodikParser().get_screenshots(session, code)
-#     rating = await KodikParser().get_rating(session, code)
-#     if rating == 0 or rating is None:
-#         rating = 'N/A'
-#     genres = ', '.join(anilibria_data['genres'])
-#     description = anilibria_data['description']
-#     duration = anilibria_data['type']['full_string']
-#     # Информация о плеерах
-#     kodik_player = await KodikParser().get_player(session, title_ru)
-#
-#     return render(request, 'main/player_page.html',
-#                   {'title': title_ru, 'year': year, 'poster_url': poster_url, 'rating': rating,
-#                    'screenshots': screenshots, 'genres': genres, 'description': description, 'duration': duration,
-#                    'player': kodik_player, 'genres_list': data_genres})
-
-
-# async def genres_page(request, pk):
-#     genre = pk
-#
-#     data_genres = await AnilibriaParser().get_anime_of_genre(pk)
-#     sidebar_data_genres = await AnilibriaParser().get_genres_list()
-#
-#     anime_data = []
-#     anime_set = set()
-#
-#     for item in data_genres:
-#         code = item['code']
-#         title = item['names']['ru']
-#         rating = await KodikParser().get_rating(session, code)
-#         year = item['season']['year']
-#         poster_url = base_image_url + item['posters']['original']['url']
-#
-#         if title not in anime_set:
-#             anime_set.add(title)
-#             anime_data.append({'code': code, 'title': title, 'year': year, 'poster_url': poster_url, 'rating': rating})
-#
-#     return render(request, 'main/genres_page.html',
-#                   {'anime_data': anime_data, 'genre_name': genre, 'genres_list': sidebar_data_genres})
-#
-#
-# async def search_page(request, pk):
-#     search_title = pk
-#
-#     data_genres = await AnilibriaParser().get_genres_list()
-#
-#     anime_results = await AnilibriaParser().search_anime(pk)
-#
-#     anime_data = []
-#     anime_set = set()
-#
-#     for result in anime_results:
-#         code = result['code']
-#         title = result['names']['ru']
-#         year = result['season']['year']
-#         poster_url = base_image_url + result['posters']['original']['url']
-#         rating = await KodikParser().get_rating(session, code)
-#
-#         if title not in anime_set:
-#             anime_set.add(title)
-#             anime_data.append({'code': code, 'title': title, 'year': year, 'poster_url': poster_url, 'rating': rating})
-#
-#     return render(request, 'main/search_page.html',
-#                   {'anime_data': anime_data, 'search_title': search_title, 'genres_list': data_genres})
-
 def main_page(request):
     anilibria_parser = AnilibriaParser()
     kodik_parser = KodikParser()
 
-    sidebar_content = anilibria_parser.get_genres_list()
+    #sidebar_content = anilibria_parser.get_genres_list()
     banner_content = anilibria_parser.get_banner_content()
     changes_content = anilibria_parser.get_changes_content()
     updates_content = anilibria_parser.get_updates_content()
@@ -356,7 +206,7 @@ def main_page(request):
         updates_data.append({'code': code, 'title': title, 'rating': rating, 'year': year, 'poster_url': poster})
 
     context = {
-        'genres_list': sidebar_content,
+        #'genres_list': sidebar_content,
         'banner': banner_data,
         'changes': changes_data,
         'updates': updates_data,
@@ -369,7 +219,7 @@ def player_page(request, pk):
     anilibria_parser = AnilibriaParser()
     kodik_parser = KodikParser()
 
-    sidebar_content = anilibria_parser.get_genres_list()
+    #sidebar_content = anilibria_parser.get_genres_list()
     detail = anilibria_parser.get_anime_by_code(pk)
 
     title = detail['names']['ru']
@@ -383,7 +233,7 @@ def player_page(request, pk):
     player = kodik_parser.get_player_by_code(pk)
 
     context = {
-        'genres_list': sidebar_content,
+        #'genres_list': sidebar_content,
         'title': title,
         'description': description,
         'genres': genres,
@@ -402,7 +252,7 @@ def search_page(request, pk):
     anilibria_parser = AnilibriaParser()
     kodik_parser = KodikParser()
 
-    sidebar_content = anilibria_parser.get_genres_list()
+    #sidebar_content = anilibria_parser.get_genres_list()
     search_content = anilibria_parser.search_anime_by_request(pk)
 
     result_content = []
@@ -416,7 +266,7 @@ def search_page(request, pk):
         result_content.append({'code': code, 'title': title, 'rating': rating, 'year': year, 'poster_url': poster})
 
     context = {
-        'genres_list': sidebar_content,
+        #'genres_list': sidebar_content,
         'search_title': pk,
         'search_results': result_content,
     }
@@ -428,7 +278,7 @@ def genres_page(request, pk):
     anilibria_parser = AnilibriaParser()
     kodik_parser = KodikParser()
 
-    sidebar_content = anilibria_parser.get_genres_list()
+    #sidebar_content = anilibria_parser.get_genres_list()
     genres_content = anilibria_parser.get_anime_list_by_genre(pk)
 
     genres_data = []
@@ -442,7 +292,7 @@ def genres_page(request, pk):
         genres_data.append({'code': code, 'title': title, 'rating': rating, 'year': year, 'poster_url': poster})
 
     context = {
-        'genres_list': sidebar_content,
+        #'genres_list': sidebar_content,
         'genre_name': pk,
         'genres_results': genres_data,
     }

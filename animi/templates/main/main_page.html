@@ -87,24 +87,24 @@
 
     <main>
         <!-- SIDEBAR -->
-        <nav class="sidebar" sidebar>
-            <div class="sidebar-inner">
-                <div class="sidebar-list">
-                    <p class="title">Жанр</p>
-                    {% for genre in genres_list %}
-                        <a href="{% url 'genrespage' pk=genre %}" menu-close class="sidebar-link">
-                            {{ genre }}
-                        </a>
-                    {% endfor %}
-                </div>
+<!--        <nav class="sidebar" sidebar>-->
+<!--            <div class="sidebar-inner">-->
+<!--                <div class="sidebar-list">-->
+<!--                    <p class="title">Жанр</p>-->
+<!--                    {% for genre in genres_list %}-->
+<!--                        <a href="{% url 'genrespage' pk=genre %}" menu-close class="sidebar-link">-->
+<!--                            {{ genre }}-->
+<!--                        </a>-->
+<!--                    {% endfor %}-->
+<!--                </div>-->
 
-                <div class="sidebar-footer">
-                    <p class="copyright">
-                        Copyright 2023 <a href="https://animi.site">AniMi</a>
-                    </p>
-                </div>
-            </div>
-        </nav>
+<!--                <div class="sidebar-footer">-->
+<!--                    <p class="copyright">-->
+<!--                        Copyright 2023 <a href="https://animi.site">AniMi</a>-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </nav>-->
         <div class="overlay" overlay menu-toggler></div>
         
         <article class="container" page-content>
