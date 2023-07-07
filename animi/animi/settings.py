@@ -31,6 +31,11 @@ ALLOWED_HOSTS = ['*']
 LOGIN_URL = reverse_lazy("user:login")
 LOGIN_REDIRECT_URL = reverse_lazy("user:profile")
 
+# Maintenance Mode settings
+MAINTENANCE_MODE = True
+MAINTENANCE_MODE_IGNORE_ADMIN_SITE = False
+MAINTENANCE_MODE_TEMPLATE = "main/status_codes/503.html"
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'maintenance_mode',
     'main',
     'user',
 ]
@@ -53,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'maintenance_mode.middleware.MaintenanceModeMiddleware',
 ]
 
 ROOT_URLCONF = 'animi.urls'
