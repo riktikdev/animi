@@ -15,12 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
-
 
 handler400 = 'animi.views.handler400'
 handler403 = 'animi.views.handler403'
@@ -29,9 +28,11 @@ handler500 = 'animi.views.handler500'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    re_path(r"^maintenance-mode/", include("maintenance_mode.urls")),
+    path('accounts/', include('allauth.urls')),
     path('favicon.ico', RedirectView.as_view(url='/static/main/img/favicon.svg')),
     path('', include('main.urls')),
-    path('user/', include('user.urls')),
+    # path('user/', include('user.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

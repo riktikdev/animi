@@ -28,11 +28,10 @@ SECRET_KEY = 'django-insecure-j6$i^fc_0(z4bi2^5a2#n81$qx^y$l*&#*#5-u6rm9ktp^vbgh
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-LOGIN_URL = reverse_lazy("user:login")
-LOGIN_REDIRECT_URL = reverse_lazy("user:profile")
+#LOGIN_REDIRECT_URL = reverse_lazy("user:profile")
 
 # Maintenance Mode settings
-MAINTENANCE_MODE = True
+MAINTENANCE_MODE = None
 MAINTENANCE_MODE_IGNORE_ADMIN_SITE = False
 MAINTENANCE_MODE_TEMPLATE = "main/status_codes/503.html"
 
@@ -45,9 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.discord',
     'maintenance_mode',
     'main',
-    'user',
 ]
 
 MIDDLEWARE = [
@@ -124,6 +128,24 @@ USE_I18N = True
 
 USE_TZ = True
 
+# AllAuth Settings
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+ACCOUNT_LOGOUT_ON_GET = True
+SOCIALACCOUNT_LOGIN_ON_GET = True
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "\u200B"
+
+# Email Settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'your_address'
+EMAIL_HOST_PASSWORD = 'your_password'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -133,8 +155,11 @@ if DEBUG:
     STATICFILES_DIRS = [
         BASE_DIR / "static",
     ]
+    #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 else:
     STATIC_ROOT = 'static/'
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -150,3 +175,13 @@ CACHES = {
         'LOCATION': 'C:/Users/Admin/Desktop/animi-project/website/django_cache',
     }
 }
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1

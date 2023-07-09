@@ -13,4 +13,5 @@ urlpatterns = [
     path('ads.txt', views.AdsTxtView.as_view()),
     path('robots.txt', views.RobotsTxtView.as_view()),
     path('sitemap.xml', views.SitemapXmlView.as_view()),
+    path('profile/<int:pk>', views.profile_page, name='profilepage')
 ]

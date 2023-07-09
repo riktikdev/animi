@@ -388,13 +388,14 @@ body {
   left: 12px;
   opacity: 0.5;
   transition: var(--transition-short);
+  transition: var(--transition-short);
 }
 
 .search-wrapper:focus-within .leading-icon { opacity: 0; }
 
 .user-btn {
   display: flex;
-  font-size: 25px;
+  font-size: 20px;
   --ionicon-stroke-width: 35px;
   align-items: center;
   justify-content: center;
@@ -757,7 +758,7 @@ body {
 
 .profile-container {
   width: 100%;
-  height: 450px;
+  height: 420px;
   max-width: 1000px;
   margin: 0 auto;
   position: relative;
@@ -772,7 +773,7 @@ body {
   justify-content: flex-end;
   width: 100%;
   height: 100%;
-  max-height: 180px;
+  max-height: 160px;
   background-size: cover;
   background-position: center;
   border-radius: 10px 10px 0 0;
@@ -782,6 +783,13 @@ body {
   width: 100%;
   height: 100%;
   opacity: 0%;
+}
+
+.profile-container .user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 }
 
 .profile-container .user-info .top-content {
@@ -799,6 +807,7 @@ body {
 }
 
 .profile-container .user-info .top-content .username-last-visit .username {
+  display: flex;
   font-weight: var(--weight-semibold);
   line-height: 0.8;
 }
@@ -850,6 +859,15 @@ body {
   border-radius: 5px;
   font-size: var(--fs-button);
   margin-left: auto;
+  margin-right: 10px;
+}
+
+.profile-container .user-info .top-content .logout-button {
+  background-color: #248046;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: var(--fs-button);
+  margin-left: auto;
   margin-right: 15px;
 }
 
@@ -876,9 +894,9 @@ body {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  border-radius: 100%;
   object-fit: cover;
   object-position: center;
+  border-radius: 100%;
   transition: var(--transition-short);
 }
 .personal-figcaption {
@@ -923,90 +941,154 @@ body {
 }
 
 /*-----------------------------------*\
-  #LOGIN AND REGISTRATION PAGES
+  #AUTHENTICATION PAGES
 \*-----------------------------------*/
 
-.login-container {
-  width: 100%;
-  height: 400px;
-  max-width: 450px;
-  margin: 0 auto;
-  position: relative;
+.authentication-wrapper {
   display: flex;
-  justify-content: center;
-  background-color: var(--background);
-  border-radius: 15px;
-  margin-top: 40px;
+  flex-direction: column;
+  max-width: 410px;
+  width: 100%;
+  padding: 25px 30px 10px 30px;
+  background: var(--background);
+  border-radius: 10px;
+  margin: auto;
+  align-items: center;
 }
 
-.login-container .form{
-  margin-top: 30px;
-  width: 90%;
+.authentication-wrapper header {
+  font-weight: var(--weight-semibold);
 }
-.login-container .form .field{
-  background: var(--banner-background);
+
+.authentication-wrapper form {
+  margin: 20px 0;
+}
+
+.authentication-wrapper form .form-group {
+  margin-bottom: 15px;
   position: relative;
-  height: 50px;
-  width: 100%;
-  margin-top: 20px;
-  border-radius: 6px;
 }
-.login-container .field input,
-.login-container .field button{
-  height: 100%;
+
+.authentication-wrapper form input,
+.authentication-wrapper form select {
+  height: 45px;
+  padding: 10px;
   width: 100%;
-  border: none;
-  font-size: 16px;
-  font-weight: 400;
-  border-radius: 6px;
-}
-.login-container .field input{
+  font-size: 15px;
   outline: none;
-  padding: 0 15px;
+  background: var(--banner-background);
+  border-radius: 5px;
 }
-.login-container .field input:focus{
-  border-bottom-width: 2px;
-}
-.login-container .eye-icon{
+
+.authentication-wrapper form .password i {
   position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  font-size: 18px;
-  color: #8b8b8b;
+  right: 0px;
+  height: 45px;
+  top: 28px;
+  font-size: 13px;
+  line-height: 45px;
+  width: 45px;
   cursor: pointer;
-  padding: 5px;
-}
-.login-container .field button{
-  color: #fff;
-  background-color: var(--primary);
-  transition: all 0.3s ease;
-  cursor: pointer;
+  color: #939393;
   text-align: center;
 }
-.login-container .field button:hover{
-  background-color: var(--primary-variant);
+
+.authentication-wrapper form label {
+  font-size: 16px;
 }
-.login-container .form-link{
-  margin-top: 10px;
+
+.authentication-wrapper form .submit-btn input {
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-weight: var(--weight-semibold);
+}
+
+.authentication-wrapper form .form-link{
+  margin: 10px 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  font-size: var(--fs-button);
 }
-.login-container .form-link span,
-.login-container .form-link a{
+
+.authentication-wrapper form .media-options a {
   display: flex;
-  flex-direction: row;
-  font-size: 14px;
-  font-weight: 400;
+  align-items: center;
+  justify-content: center;
+}
+
+.authentication-wrapper form .media-options .field {
+  margin: 0 0 10px;
+}
+
+.authentication-wrapper form .media-options .field.google {
+  height: 40px;
+  background: white;
+  border-radius: 5px;
+}
+
+.authentication-wrapper form .media-options .field.discord {
+  height: 40px;
+  background: #5765f2;
+  border-radius: 5px;
+}
+
+.authentication-wrapper form .media-options field .google-img {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+}
+
+.authentication-wrapper form .media-options field .discord-img {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+}
+
+.authentication-wrapper form .media-options img {
+  margin-right: 10px;
+}
+
+.authentication-wrapper form .media-options img.google-img{
+  height: 20px;
+  width: 20px;
+  object-fit: cover;
+}
+
+.authentication-wrapper form .media-options img.discord-img{
+  height: 20px;
+  width: 20px;
+  object-fit: cover;
+}
+
+.authentication-wrapper form .media-options a.google{
+  border: 1px solid white;
+}
+
+.authentication-wrapper form .media-options a.discord{
+  border: 1px solid #5765f2;
+}
+
+.authentication-wrapper form .media-options a.google span{
+  font-weight: var(--weight-medium);
+  opacity: 0.8;
+  color: #12141a;
+}
+
+.authentication-wrapper form .media-options a.discord span{
+  font-weight: var(--weight-medium);
+  opacity: 0.8;
   color: #ffffff;
 }
-.login-container .form a{
-  color: #0171d3;
-  text-decoration: none;
-}
-.login-container .form-content a:hover{
-  text-decoration: underline;
+
+.authentication-wrapper form .line{
+  position: relative;
+  height: 1px;
+  width: 100%;
+  margin: 22px 0;
+  background-color: var(--banner-background);
 }
 
 /*-----------------------------------*\
@@ -1157,6 +1239,11 @@ body {
   .maintenance-content .information-text p {
     font-size: 18px;
   }
+
+  /* AUTHENTICATION PAGE */
+  .authentication-wrapper header {
+    font-size: 30px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -1258,6 +1345,11 @@ body {
   /* MAINTENANCE PAGE */
   .maintenance-content img {
     height: 256px;
+  }
+
+  /* AUTHENTICATION PAGE */
+  .authentication-wrapper header {
+    font-size: 35px;
   }
 }
 

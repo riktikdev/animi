@@ -1,12 +1,14 @@
 from django.core.cache import cache
 
-
 import requests
 from django.core.cache.utils import make_template_fragment_key
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import random
 from time import perf_counter
 from django.views.generic import TemplateView
+
+from .forms import ProfilePictureForm, ProfileBannerForm
+from .models import Profile
 
 base_image_url = 'https://anilibria.tv'
 
@@ -351,3 +353,26 @@ def privacy_page(request):
 
 def copyright_page(request):
     return render(request, 'main/copyright.html')
+
+
+def profile_page(request, pk):
+    if request.user.is_authenticated:
+        sidebar_content = AnilibriaParser().get_genres_list()
+        profile = Profile.objects.get(user_id=pk)
+        if request.method == 'POST':
+            form_type = request.POST.get('form_type')
+            if form_type == 'avatar':
+                form = ProfilePictureForm(request.POST, request.FILES, instance=profile)
+                if form.is_valid():
+                    form.save()
+                    return redirect('profilepage', pk=pk)
+            elif form_type == 'banner':
+                form = ProfileBannerForm(request.POST, request.FILES, instance=profile)
+                if form.is_valid():
+                    form.save()
+                    return redirect('profilepage', pk=pk)
+        else:
+            form = ProfilePictureForm(instance=profile)
+        return render(request, 'main/profile.html', {"profile": profile, "form": form, "genres_list": sidebar_content})
+    else:
+        return redirect('account_login')
