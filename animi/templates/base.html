@@ -7,19 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- PRIMARY META TAGS -->
-    <title>AniMi</title>
+    {% block meta_tags %}
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="title" content="{% block meta_title %}{% endblock %}">
+    <meta property="og:title" content="{% block meta_ogtitle %}{% endblock %}">
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <meta property="og:description" content="{% block meta_ogdescription %}{% endblock %}">
+    {% endblock %}
+    <meta name="keywords" content="мультфильмы, аниме, смотреть, онлайн, видео, серии, сезоны, эпизоды">
+    <link href="https://animi.site/" rel="canonical">
 
     <!-- FAVICON -->
     <link rel="shortcut icon" href="{% static 'main/img/favicon.svg' %}" type="image/svg+xml">
 
-    <!-- ION ICONS -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- FONTAWESOME -->
+    <script src="https://kit.fontawesome.com/f3d6a932e2.js" crossorigin="anonymous"></script>
 
     <!-- GOOGLE FONT LINK -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- GOOGLE ADS -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2640998751343189" crossorigin="anonymous"></script>
@@ -28,7 +35,6 @@
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 
     <!-- CUSTOM JS LINK -->
-    <!-- <script src="./assets/js/global.js" defer></script> -->
     <script src="{% static 'main/js/index.js' %}" defer></script>
 </head>
 <body>
@@ -56,48 +62,50 @@
           <img src="{% static 'main/img/search.png' %}" width="24" height="24" alt="open search box">
         </button>
 
+        <button class="menu-btn" menu-btn menu-toggler>
+          <img src="{% static 'main/img/menu.png' %}" width="24" height="24" alt="open menu" class="menu">
+          <img src="{% static 'main/img/menu-close.png' %}" width="24" height="24" alt="close menu" class="close">
+        </button>
+
         {% if user.is_authenticated %}
-            <a href="{% url 'profile' request.user.id %}" class="user-btn">
+            <a href="{% url 'profilepage' request.user.id %}" class="user-btn">
                 {% if user.profile.profile_image %}
                 <img src="{{ user.profile.profile_image.url }}">
                 {% else %}
-                <ion-icon name="person-circle-outline"></ion-icon>
+                <img src="{% static 'main/img/default_profile_picture.png' %}">
                 {% endif %}
             </a>
         {% else %}
-            <a href="{% url 'login' %}" class="user-btn">
-                <ion-icon name="log-in-outline"></ion-icon>
+            <a href="{% url 'account_login' %}" class="user-btn">
+                <i class="fa-solid fa-right-to-bracket"></i>
             </a>
         {% endif %}
-    </header>
+  </header>
 
+    <!-- SIDEBAR -->
+    <nav class="sidebar" sidebar>
+        <div class="sidebar-inner">
+            <div class="sidebar-list">
+                <p class="title">Жанр</p>
+                {% for genre in genres_list %}
+                    <a href="{% url 'genrespage' pk=genre %}" menu-close class="sidebar-link">
+                        {{ genre }}
+                    </a>
+                {% endfor %}
+            </div>
+
+            <div class="sidebar-footer">
+                <p class="copyright">
+                    Copyright 2023 <a href="https://animi.site">AniMi</a>
+                </p>
+            </div>
+        </div>
+    </nav>
     <div class="overlay" overlay menu-toggler></div>
 
     <article class="container" page-content>
-        <div class="login-container">
-            <div class="form login">
-                <div class="form-content">
-                    <h2>Авторизация</h2>
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="field input-field">
-                            <input type="text" name="username" placeholder="Имя пользователя" class="input">
-                        </div>
-                        <div class="field input-field">
-                            <input type="password" name="password" placeholder="Пароль" class="password">
-                            <i class='bx bx-hide eye-icon'></i>
-                        </div>
-                        <div class="form-link">
-                            <span><a href="{% url 'register' %}" class="link signup-link">Создать аккаунт</a></span>
-                            <span><a href="#" class="link signup-link">Забыли пароль?</a></span>
-                        </div>
-                        <div class="field button-field">
-                            <button>Продолжить</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+    {% block content %}
+    {% endblock %}
     </article>
 </body>
 </html>

@@ -1,194 +1,53 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base.html' %}
+{% load static cache account socialaccount %}
 
-    <!-- PRIMARY META TAGS -->
-    <title>{{ title }}</title>
-    <meta name="title" content="{{ title }}">
-    <meta name="description" content="{{ description }}">
+{% block meta_tags %}
+<title>{{ title }}</title>
+<meta name="title" content="{{ title }}">
+<meta property="og:title" content="{{ title }}">
+<meta name="description" content="{{ description }}">
+<meta property="og:description" content="{{ description }}">
+{% endblock %}
 
-    <!-- FAVICON -->
-    <link rel="shortcut icon" href="{% static 'main/img/favicon.svg' %}" type="image/svg+xml">
-
-    <!-- FONTAWESOME -->
-    <script src="https://kit.fontawesome.com/f3d6a932e2.js" crossorigin="anonymous"></script>
-
-    <!-- GOOGLE FONT LINK -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <!-- GOOGLE ADS -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2640998751343189" crossorigin="anonymous"></script>
-
-    <!-- CUSTOM CSS LINK -->
-    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
-
-    <!-- CUSTOM JS LINK -->
-    <!-- <script src="./assets/js/global.js" defer></script> -->
-    <script src="{% static 'main/js/index.js' %}" defer></script>
-</head>
-<body>
-    <!-- HEADER -->
-    <header class="header">
-        <a href="{% url 'mainpage' %}" class="logo">
-            <img src="{% static 'main/img/logo.svg' %}" width="140" height="32" alt="AniMi Главная">
-        </a>
-
-        <form action="/search" class="search-form" method="GET">
-            <div class="search-box" search-box>
-                <div class="search-wrapper" search-wrapper>
-                    <input type="text" name="search" aria-label="search anime" placeholder="Поиск ..." class="search-field" search-field>
-    
-                    <img src="{% static 'main/img/search.png' %}" width="24" height="24" alt="search" class="leading-icon">
+{% block content %}
+<!-- ANIME DETAILS -->
+<div class="anime-detail">
+    <div class="backdrop-image" style="background-image: url('{{ poster_url }}')"></div>
+    <figure class="poster-box anime-poster">
+        <img src="{{ poster_url }}" alt="{{ title }}" class="img-cover">
+    </figure>
+    <div class="detail-box">
+        <div class="detail-content">
+            <h1 class="heading">{{ title }}</h1>
+            <div class="meta-list">
+                <div class="meta-item">
+                    <img src="{% static 'main/img/star.png' %}" width="20" height="20" alt="rating">
+                    <span class="span">{{ rating }}</span>
                 </div>
-    
-                <button class="search-btn" search-toggler>
-                    <img src="{% static 'main/img/close.png' %}" width="24" height="24" alt="close search box">
-                </button>
+                <div class="separator"></div>
+                <div class="meta-item">{{ duration }}</div>
+                <div class="separator"></div>
+                <div class="meta-item">{{ year }}</div>
+                <div class="meta-item card-badge">PG-13</div>
             </div>
-        </form>
-
-        <button class="search-btn" search-toggler menu-close>
-          <img src="{% static 'main/img/search.png' %}" width="24" height="24" alt="open search box">
-        </button>
-
-        <button class="menu-btn" menu-btn menu-toggler>
-          <img src="{% static 'main/img/menu.png' %}" width="24" height="24" alt="open menu" class="menu">
-          <img src="{% static 'main/img/menu-close.png' %}" width="24" height="24" alt="close menu" class="close">
-        </button>
-
-        {% if user.is_authenticated %}
-            <a href="{% url 'profilepage' request.user.id %}" class="user-btn">
-                {% if user.profile.profile_image %}
-                <img src="{{ user.profile.profile_image.url }}">
-                {% else %}
-                <img src="{% static 'main/img/default_profile_picture.png' %}">
-                {% endif %}
-            </a>
-        {% else %}
-            <a href="{% url 'account_login' %}" class="user-btn">
-                <i class="fa-solid fa-right-to-bracket"></i>
-            </a>
-        {% endif %}
-    </header>
-    
-    <!-- SIDEBAR -->
-    <nav class="sidebar" sidebar>
-        <div class="sidebar-inner">
-            <div class="sidebar-list">
-                <p class="title">Жанр</p>
-                {% for genre in genres_list %}
-                    <a href="{% url 'genrespage' pk=genre %}" menu-close class="sidebar-link">
-                        {{ genre }}
-                    </a>
+            <p class="genre">{{ genres }}</p>
+            <p class="overview">
+                {{ description }}
+            </p>
+        </div>
+        <div class="title-wrapper">
+            <h3 class="title-large">Скриншоты</h3>
+        </div>
+        <div class="slider-list">
+            <div class="slider-inner">
+                {% for screenshot in screenshots %}
+                    <div class="image-card"><img src="{{ screenshot }}"></div>
                 {% endfor %}
             </div>
-
-            <div class="sidebar-footer">
-                <p class="copyright">
-                    Copyright 2023 <a href="https://animi.site">AniMi</a>
-                </p>
-            </div>
         </div>
-    </nav>
-    <div class="overlay" overlay menu-toggler></div>
-    
-    <article class="container" page-content>
-        <!-- ANIME DETAILS -->
-        <div class="anime-detail">
-            <div class="backdrop-image" style="background-image: url('{{ poster_url }}')"></div>
-            <figure class="poster-box anime-poster">
-                <img src="{{ poster_url }}" alt="{{ title }}" class="img-cover">
-            </figure>
-            <div class="detail-box">
-                <div class="detail-content">
-                    <h1 class="heading">{{ title }}</h1>
-                    <div class="meta-list">
-                        <div class="meta-item">
-                            <img src="{% static 'main/img/star.png' %}" width="20" height="20" alt="rating">
-                            <span class="span">{{ rating }}</span>
-                        </div>
-                        <div class="separator"></div>
-                        <div class="meta-item">{{ duration }}</div>
-                        <div class="separator"></div>
-                        <div class="meta-item">{{ year }}</div>
-                        <div class="meta-item card-badge">PG-13</div>
-                    </div>
-                    <p class="genre">{{ genres }}</p>
-                    <p class="overview">
-                        {{ description }}
-                    </p>
-                </div>
-                <div class="title-wrapper">
-                    <h3 class="title-large">Скриншоты</h3>
-                </div>
-                <div class="slider-list">
-                    <div class="slider-inner">
-                        {% for screenshot in screenshots %}
-                            <div class="image-card"><img src="{{ screenshot }}"></div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="player">
-            <iframe src="{{ player }}" frameborder="0" AllowFullScreen allow="autoplay *; fullscreen *"></iframe>
-        </div>
-
-        <!-- ANIME LIST
-        <section class="movie-list" aria-label="upcoming anime">
-            <div class="title-wrapper">
-                <h3 class="title-large">Вам также может понравиться</h3>
-            </div>
-            <div class="slider-list">
-                <div class="slider-inner">
-                    <div class="anime-card">
-                        <figure class="poster-box card-banner">
-                            <img src="box_image.jpg" class="img-cover">
-                        </figure>
-                        <h4 class="title">Другой мир и сестра, которая убивает с одного удара</h4>
-                        <div class="meta-list">
-                            <div class="meta-item">
-                                <img src="./assets/images/star.png" width="24" height="24" loading="lazy" alt="rating">
-                                <span class="span">8.4</span>
-                            </div>
-                            <div class="card-badge">2022</div>
-                        </div>
-                        <a href="./detail.html" class="card-btn" title="Другой мир и сестра, которая убивает с одного удара"></a>
-                    </div>
-                </div>
-            </div>
-        </section> -->
-
-        <footer class="footer">
-            <div class="links">
-                <a href="{% url 'terms' %}" menu-close class="sidebar-link">
-                    <i class="fa-solid fa-handshake"></i><span>Соглашение</span>
-                </a>
-                <a href="{% url 'privacy' %}" menu-close class="sidebar-link">
-                    <i class="fa-solid fa-lock"></i><span>Конфиденциальность</span>
-                </a>
-                <a href="{% url 'copyright' %}" menu-close class="sidebar-link">
-                    <i class="fa-solid fa-copyright"></i><span>Для правообладателей</span>
-                </a>
-            </div>
-            <div class="social-links">
-                <a href="https://discord.gg/t983xN6PBw" menu-close class="sidebar-link">
-                    <i class="fa-brands fa-discord"></i>
-                </a>
-                <a href="https://tiktok.com/@animi_official" menu-close class="sidebar-link">
-                    <i class="fa-brands fa-tiktok"></i>
-                </a>
-                <a href="https://youtube.com/@animiofficial" menu-close class="sidebar-link">
-                    <i class="fa-brands fa-youtube"></i>
-                </a>
-            </div>
-        </footer>
-    </article>
-</body>
-</html>
+    </div>
+</div>
+<div class="player">
+    <iframe src="{{ player }}" frameborder="0" AllowFullScreen allow="autoplay *; fullscreen *"></iframe>
+</div>
+{% endblock %}

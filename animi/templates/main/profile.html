@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static cache account socialaccount %}
+
+{% block meta_tags %}
+<title>{% if profile %}{{ profile.user.username }}{% endif %} - Сайт для просмотра аниме (AniMi)</title>
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+            {% if profile.user.profile.profile_banner %}
+                <div class="user-banner" style="background-image: url('{{ profile.user.profile.profile_banner.url }}')">
+            {% else %}
+                <div class="user-banner" style="background-color: #0072e6">
+            {% endif %}
+                {% if request.user.id == profile.user.id %}
+                    <div class="select-user-banner">
+                        <label class="label">
+                            <form method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="hidden" name="form_type" value="banner">
+                                <input accept=".png,.jpg,.jpeg,.gif" type="file" name="profile_banner" onchange="this.form.submit()">
+                            </form>
+                            <i class="fa-solid fa-pen-to-square" style="cursor: pointer"></i>
+                        </label>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="user-info">
+                <div class="top-content">
+                    <div class="personal-image">
+                        <label class="label">
+                            {% if request.user.id == profile.user.id %}
+                                <form method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="form_type" value="avatar">
+                                    <input accept=".png,.jpg,.jpeg,.gif" type="file" name="profile_image" onchange="this.form.submit()">
+                                </form>
+                                <figure class="personal-figure">
+                                    {% if profile.user.profile.profile_image %}
+                                      <img src="{{ profile.user.profile.profile_image.url }}" class="personal-avatar" style="cursor: pointer" alt="avatar">
+                                    {% else %}
+                                      <img src="{% static 'main/img/default_profile_picture.png' %}" class="personal-avatar" style="cursor: pointer" alt="avatar">
+                                    {% endif %}
+                                    <figcaption class="personal-figcaption" style="cursor: pointer">
+                                        <i class="fa-solid fa-image"></i>
+                                    </figcaption>
+                                </figure>
+                            {% else %}
+                                <figure class="personal-figure">
+                                    {% if profile.user.profile.profile_image %}
+                                      <img src="{{ profile.user.profile.profile_image.url }}" class="personal-avatar" alt="avatar">
+                                    {% else %}
+                                      <img src="{% static 'main/img/default_profile_picture.png' %}" class="personal-avatar" alt="avatar">
+                                    {% endif %}
+                                    <figcaption class="personal-figcaption">
+                                        <i class="fa-solid fa-image"></i>
+                                    </figcaption>
+                                </figure>
+                            {% endif %}
+                        </label>
+                    </div>
+                    <div class="username-last-visit">
+                        <div class="username">{% if profile %}{{ profile.user.username }}{% endif %}</div>
+                        <div class="last-visit">{% if profile %}{{ profile.user.last_login }}{% endif %}</div>
+                    </div>
+                    {% if request.user.id != profile.user.id %}
+                        <a href="#" class="add-to-friends-button"><i class="fa-solid fa-user-plus"></i><span>Отправить запрос дружбы</span></a>
+                    {% endif %}
+                    {% if request.user.id == profile.user.id %}
+                        <a href="{% url 'account_logout' %}" class="logout-button"><i class="fa-solid fa-right-from-bracket"></i></a>
+                    {% endif %}
+                </div>
+                <div class="bottom-content">
+                    <div class="description">
+                        <h5>Обо мне</h5>
+                        <span>{% if profile %}{{ profile.profile_bio }}{% endif %}</span>
+                    </div>
+                    <div class="signup-date">
+                        <h5>Дата регистрации</h5>
+                        <span>{% if profile %}{{ profile.user.date_joined }}{% endif %}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

@@ -1,105 +1,14 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base.html' %}
+{% load static cache account socialaccount %}
 
-    <!-- PRIMARY META TAGS -->
-    <title>{% if genre_name %}{{ genre_name }}{% endif %}</title>
-    <meta name="title" content="{% if genre_name %}{{ genre_name }}{% endif %}">
-    <meta name="description" content="AniMi — аниме жанра «{% if genre_name %}{{ genre_name }}{% endif %}»">
+{% block meta_tags %}
+<title>{% if genre_name %}{{ genre_name }}{% endif %}</title>
+<meta name="title" content="{% if genre_name %}{{ genre_name }}{% endif %}">
+<meta name="description" content="AniMi — аниме жанра «{% if genre_name %}{{ genre_name }}{% endif %}»">
+{% endblock %}
 
-    <!-- FAVICON -->
-    <link rel="shortcut icon" href="{% static 'main/img/favicon.svg' %}" type="image/svg+xml">
-
-    <!-- FONTAWESOME -->
-    <script src="https://kit.fontawesome.com/f3d6a932e2.js" crossorigin="anonymous"></script>
-
-    <!-- GOOGLE FONT LINK -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <!-- GOOGLE ADS -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2640998751343189" crossorigin="anonymous"></script>
-
-    <!-- CUSTOM CSS LINK -->
-    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
-
-    <!-- CUSTOM JS LINK -->
-    <!-- <script src="./assets/js/global.js" defer></script> -->
-    <script src="{% static 'main/js/index.js' %}" defer></script>
-</head>
-<body>
-    <!-- HEADER -->
-    <header class="header">
-        <a href="{% url 'mainpage' %}" class="logo">
-            <img src="{% static 'main/img/logo.svg' %}" width="140" height="32" alt="AniMi Главная">
-        </a>
-
-        <form action="/search" class="search-form" method="GET">
-            <div class="search-box" search-box>
-                <div class="search-wrapper" search-wrapper>
-                    <input type="text" name="search" aria-label="search anime" placeholder="Поиск ..." class="search-field" search-field>
-    
-                    <img src="{% static 'main/img/search.png' %}" width="24" height="24" alt="search" class="leading-icon">
-                </div>
-    
-                <button class="search-btn" search-toggler>
-                    <img src="{% static 'main/img/close.png' %}" width="24" height="24" alt="close search box">
-                </button>
-            </div>
-        </form>
-
-        <button class="search-btn" search-toggler menu-close>
-          <img src="{% static 'main/img/search.png' %}" width="24" height="24" alt="open search box">
-        </button>
-
-        <button class="menu-btn" menu-btn menu-toggler>
-          <img src="{% static 'main/img/menu.png' %}" width="24" height="24" alt="open menu" class="menu">
-          <img src="{% static 'main/img/menu-close.png' %}" width="24" height="24" alt="close menu" class="close">
-        </button>
-
-        {% if user.is_authenticated %}
-            <a href="{% url 'profilepage' request.user.id %}" class="user-btn">
-                {% if user.profile.profile_image %}
-                <img src="{{ user.profile.profile_image.url }}">
-                {% else %}
-                <img src="{% static 'main/img/default_profile_picture.png' %}">
-                {% endif %}
-            </a>
-        {% else %}
-            <a href="{% url 'account_login' %}" class="user-btn">
-                <i class="fa-solid fa-right-to-bracket"></i>
-            </a>
-        {% endif %}
-    </header>
-
-    <!-- SIDEBAR -->
-    <nav class="sidebar" sidebar>
-        <div class="sidebar-inner">
-            <div class="sidebar-list">
-                <p class="title">Жанр</p>
-                {% for genre in genres_list %}
-                    <a href="{% url 'genrespage' pk=genre %}" menu-close class="sidebar-link">
-                        {{ genre }}
-                    </a>
-                {% endfor %}
-            </div>
-
-            <div class="sidebar-footer">
-                <p class="copyright">
-                    Copyright 2023 <a href="https://animi.site">AniMi</a>
-                </p>
-            </div>
-        </div>
-    </nav>
-    <div class="overlay" overlay menu-toggler></div>
-
-    <article class="container">
-        <section class="movie-list genre-list">
+{% block content %}
+<section class="movie-list genre-list">
             <div class="title-wrapper">
                 <h1 class="heading">Аниме жанра «{% if genre_name %}{{ genre_name }}{% endif %}»</h1>
             </div>
@@ -148,6 +57,4 @@
             </div>
         </footer>
         </section>
-    </article>
-</body>
-</html>
+{% endblock %}
