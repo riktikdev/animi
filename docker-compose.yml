@@ -12,6 +12,8 @@ services:
       - web-client:/www/data
     ports:
       - 8081:8081
+  search-api:
+    build: ./services/search
   db:
     image: mariadb:11
     restart: always

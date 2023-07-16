@@ -12,6 +12,7 @@ export default function Home() {
     <main>
       <div>Плейсхолдер</div>
       <button onClick={addCount}>У тебя {count} очков</button>
+      <a href="/route">Forward</a>
     </main>
   )
 }

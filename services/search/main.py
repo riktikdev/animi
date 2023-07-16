@@ -1,6 +1,10 @@
+import uvicorn
 from fastapi import FastAPI, HTTPException, Query
 import json
 import random
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=5000, log_level="warning")
 
 app = FastAPI(
     title='AniMi API'
